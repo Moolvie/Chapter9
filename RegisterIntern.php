@@ -15,7 +15,7 @@ if (empty($_POST['email'])) {
 	echo "<p>You need to enter an e-mail address.</p>\n";
 }
 else {
-     $email = stripslashes($_POST['email'];
+     $email = stripslashes($_POST['email']);
      if (preg_match("/^[\w-]+(\.[\w-]+)*@" .
 	"[\w-]+(\.[\w-]+)*(\.[a-zA-Z\{2, })$/i" .
 	$email) == 0) {
@@ -32,13 +32,13 @@ if (empty($_POST['password'])) {
 }
 else
 	$password = stripslashes($_POST['password']);
-if (empty($_POST['password2'})){
+if (empty($_POST['password2'])){
 	++$errors;
 	echo "<p>You need to enter a confirmation password.</p>\n";
 	$password2 = "";
 }
 else 
-	$password2 = stripslashes($_POST['password2']):
+	$password2 = stripslashes($_POST['password2']);
 if ((!(empty($password))) && (!(empty($password2)))) {
 	if (strlen($password) < 6) {
 		++$errors;
