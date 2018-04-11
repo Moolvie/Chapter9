@@ -30,7 +30,7 @@ if (empty($_POST['email'])) {
 else {
      $email = stripslashes($_POST['email']);
      if (preg_match("/^[\w-]+(\.[\w-]+)*@" .
-	"[\w-]+(\.[\w-]+)*(\.[a-zA-Z]{2, })$/i" .
+	"[\w-]+(\.[\w-]+)*(\.[a-zA-Z]{2, })$/i" ,
 	$email) == 0) {
 	++$errors;
 	echo "<p>You need to enter a valid " .
