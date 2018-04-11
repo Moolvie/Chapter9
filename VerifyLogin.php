@@ -11,20 +11,23 @@
 
       Filename: VerifyLogin.php
    -->
+   <!-- #1 -->
 <title>Verify Intern Login</title>
 <meta http-equiv="content-type" content="text/html; charset=iso-8849-1" />
 </head>
 <body>
+<!-- #2 -->
 <h1>College Internship</h1>
 <h2>Verify Intern Login</h2>
 <?php
+// #3
 $errors = 0;
-$DBConnect = @mysqli_connect("localhost", "root", "crumplebatverifytree");
+$DBConnect = @mysqli_connect("localhost", "root", "!root");
 if ($DBConnect === FALSE) {
     echo "<p>Unable to connect to the database
     server. " .
-    "Error code " . mysqli_errno() . ": " .
-    mysqli_error() . "</p>\n";
+    "Error code " . mysqli_errno($DBConnect) . ": " .
+    mysqli_error($DBConnect) . "</p>\n";
     ++$errors;
     }
     else {
@@ -39,6 +42,7 @@ if ($DBConnect === FALSE) {
         ++$errors;
     }
 }
+// #4
 $TableName = "interns";
 if ($errors == 0) {
     $SQLstring = "SELECT internID, first, last FROM $TableName" 
@@ -62,12 +66,14 @@ if ($errors == 0) {
         echo "<p>Welcome back, $InternName!</p>\n";
     }
 }
+// #5
 if ($errors > 0) {
     echo "<p>Please use your browser's BACK button
         to return " .
         " to the form and fix the errors
         indicated.</p>\n";
 }
+// #6
 if ($errors == 0) {
     echo "<form method='post' " .
         " action='AvailableOpportunities.php'>\n";
