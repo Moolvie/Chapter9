@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
 <!--
       PHP Programming With MySQL Second Edition
@@ -11,12 +12,15 @@
 
       Filename:RegisterIntern.php
    -->
+<!-- #1 -->
 	<title>Intern Registration</title>
 </head>
 <body>
+<!-- #2. -->
 <h1>College Internship</h1>
 <h2>Intern Registration</h2>
 <?php
+// #3
 $errors = 0;
 $email = "";
 if (empty($_POST['email'])) {
@@ -34,6 +38,7 @@ else {
 	$email = "";
      }
 }
+// #4
 if (empty($_POST['password'])) {
 	++$errors;
 	echo "<p>You need to enter a password.</p>\n";
@@ -62,6 +67,7 @@ if ((!(empty($password))) && (!(empty($password2)))) {
 		$password2 = "";
 	}
 }
+// #5
 if ($errors == 0) {
 	$DBConnect = @mysqli_connect("localhost", "root", "crumplebatverifytree");
 	if ($DBConnect === FALSE) {
@@ -80,6 +86,7 @@ if ($errors == 0) {
 		}
 	}
 }
+// #6
 $TableName = "interns";
 if ($errors == 0) {
 	$SQLstring = "SELECT count(*) FROM $TableName" . " WHERE email=$email";
@@ -94,10 +101,12 @@ if ($errors == 0) {
 		}
 	}
 }
+// #7
 if ($errors > 0) {
 	echo "<p>Please use your browser's BACK button to return" . 
 		" to the form and fix the errors indicated.</p>\n";
 }
+// #8
 if ($errors == 0) {
 	$first = stripslashes($_POST['first']);
 	$last = stripslashes($_POST['last']);
@@ -117,6 +126,8 @@ if ($errors == 0) {
 		$InternID = mysqli_insert_id($DBConnect);
 	}
 	mysqli_close($DBConnect);
+}
+// #9
 if ($errors == 0) {
 	$InternName = $first . " " . $last;
 	echo "<p>Thank you, $InternName. ";
