@@ -29,8 +29,8 @@ if (empty($_POST['email'])) {
 }
 else {
      $email = stripslashes($_POST['email']);
-     if (preg_match("/^[\w-]+(\.[\w-]+)*@" .
-	"[\w-]+(\.[\w-]+)*(\.[a-zA-Z]{2, })$/i" ,
+     if (preg_match("/^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*@" .
+	"[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$/i" ,
 	$email) == 0) {
 	++$errors;
 	echo "<p>You need to enter a valid " .
@@ -89,7 +89,7 @@ if ($errors == 0) {
 // #6
 $TableName = "interns";
 if ($errors == 0) {
-	$SQLstring = "SELECT count(*) FROM $TableName" . " WHERE email=$email";
+	$SQLstring = "SELECT count(*) FROM $TableName" . " WHERE email='" . $email. "'";
 	$QueryResult = @mysqli_query($DBConnect, $SQLstring);
 	if ($QueryResult !== FALSE) {
 		$Row = mysqli_fetch_row($QueryResult);
@@ -115,7 +115,7 @@ if ($errors == 0) {
 		" VALUES ( '$first', '$last', '$email', " .
 		" '" . md5($password) . "')";
 	$QueryResult - @mysqli_query($DBConnect, $SQLstring);
-	if ($QueryResult === FALSE) {
+	if ($QueryResult !== FALSE) {
 		echo "<p>Unable to save your registration " .
 			" information. Error code " .
 			mysqli_errno($DBConnect) . ": " .
