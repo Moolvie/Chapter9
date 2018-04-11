@@ -41,12 +41,13 @@ if ($DBConnect === FALSE) {
 }
 $TableName = "interns";
 if ($errors == 0) {
-    $SQLstring = "SELECT internID, first, last FROM
-    $TableName"
-        . " where email='" . stripslashes($_POST['email']) .
-        "' and password_md5='" .
+    $SQLstring = "SELECT internID, first, last FROM $TableName" 
+        . " WHERE email='" . stripslashes($_POST['email']) .
+        "' AND password_md5='" .
         md5(stripslashes($_POST['password'])) . "'";
+	echo "<p>Query = $SQLstring</p>\n";
     $QueryResult = @mysqli_query($DBConnect, $SQLstring);
+	echo "<p>Query result = $QueryResulti</p>\n";
     if (mysqli_num_rows($QueryResult)==0) {
         echo "<p>The e-mail address/password " .
             " combination entered is not valid.
