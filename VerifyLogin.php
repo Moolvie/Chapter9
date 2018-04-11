@@ -44,13 +44,12 @@ if ($DBConnect === FALSE) {
 }
 // #4
 $TableName = "interns";
+$userEmail = stripslashes($_POST['email']);
+$userPass = md5(stripslashes($_POST['password']));
 if ($errors == 0) {
-    $SQLstring = "SELECT internID, first, last FROM $TableName" 
-        . " WHERE email='" . stripslashes($_POST['email']) .
-        "' AND password_md5='" .
-        md5(stripslashes($_POST['password'])) . "'";
-	
-    $QueryResult = @mysqli_query($DBConnect, $SQLstring);
+    $SQLstring = "SELECT internID, first, last FROM $TableName WHERE email='$userEmail' AND password_md5='$userPass'";
+        	
+    $QueryResult = mysqli_query($SQLstring, $DBConnect);
 	
     if (mysqli_num_rows($QueryResult)==0) {
         echo "<p>The e-mail address/password " .
