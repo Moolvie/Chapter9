@@ -19,8 +19,7 @@
 <h2>Verify Intern Login</h2>
 <?php
 $errors = 0;
-$DBConnect = @mysql_connect("host", "user",
-"password");
+$DBConnect = @mysql_connect("host", "user", "password");
 if ($DBConnect === FALSE) {
     echo "<p>Unable to connect to the database
     server. " .

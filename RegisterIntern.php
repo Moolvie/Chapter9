@@ -2,6 +2,15 @@
 	"http://www.w3.org/1999/xhtml">
 <html>
 <head>
+<!--
+      PHP Programming With MySQL Second Edition
+      
+
+      Author: Doug Enos	
+      Date:   April 11, 2018
+
+      Filename:RegisterIntern.php
+   -->
 	<title>Intern Registration</title>
 <head>
 <body>
