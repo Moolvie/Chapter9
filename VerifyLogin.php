@@ -19,23 +19,22 @@
 <h2>Verify Intern Login</h2>
 <?php
 $errors = 0;
-$DBConnect = @mysql_connect("host", "user", "password");
+$DBConnect = @mysqli_connect("localhost", "root", "crumplebatverifytree");
 if ($DBConnect === FALSE) {
     echo "<p>Unable to connect to the database
     server. " .
-    "Error code " . mysql_errno() . ": " .
-    mysql_error() . "</p>\n";
+    "Error code " . mysqli_errno() . ": " .
+    mysqli_error() . "</p>\n";
     ++$errors;
     }
     else {
     $DBName = "internships";
-    $result = @mysql_select_db($DBName,
+    $result = @mysqli_select_db($DBName,
     $DBConnect);
     if ($result === FALSE) {
         echo "<p>Unable to select the database. " .
-            "Error code " . mysql_
-            errno($DBConnect) .
-            ": " . mysql_error($DBConnect) .
+            "Error code " . mysqli_errno($DBConnect) .
+            ": " . mysqli_error($DBConnect) .
             "</p>\n";
         ++$errors;
     }
@@ -44,20 +43,18 @@ $TableName = "interns";
 if ($errors == 0) {
     $SQLstring = "SELECT internID, first, last FROM
     $TableName"
-        . " where email='" . stripslashes($_
-        POST['email']) .
+        . " where email='" . stripslashes($_POST['email']) .
         "' and password_md5='" .
         md5(stripslashes($_POST['password'])) . "'";
-    $QueryResult = @mysql_query($SQLstring,
-    $DBConnect);
-    if (mysql_num_rows($QueryResult)==0) {
+    $QueryResult = @mysqli_query($DBConnect, $SQLstring);
+    if (mysqli_num_rows($QueryResult)==0) {
         echo "<p>The e-mail address/password " .
             " combination entered is not valid.
             </p>\n";
         ++$errors;
     }
     else {
-        $Row = mysql_fetch_assoc($QueryResult);
+        $Row = mysqli_fetch_assoc($QueryResult);
         $InternID = $Row['internID'];
         $InternName = $Row['first'] . " " .
         $Row['last'];
