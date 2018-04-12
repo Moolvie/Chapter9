@@ -28,7 +28,7 @@ if ($DBConnect === FALSE) {
     }
     else {
          $DBName = "internships";
-         $result = @mysqli_select_db($DBName, $DBConnect);
+         $result = @mysqli_select_db($DBConnect, $DBName);
 		if ($result === FALSE) {
 			echo "<p>Unable to select the database. " .
 				"Error code " . mysqli_errno($DBConnect) .
@@ -43,9 +43,7 @@ $userPasswd = md5(stripslashes($_POST['password']));
 if ($errors == 0) {
     $SQLstring = "SELECT internID, first, last FROM $TableName 
 	 WHERE email='$userEmail' AND password_md5='$userPasswd'";
-	echo "<p>Query = $SQLstring</p>\n";
     $QueryResult = @mysqli_query($DBConnect, $SQLstring);
-	echo "<p>Query result = $QueryResult</p>\n";
     if (mysqli_num_rows($QueryResult)==0) {
         echo "<p>The e-mail address/password " .
             " combination entered is not valid.
