@@ -19,7 +19,6 @@
 <h1>College Internship</h1>
 <h2>Available Opportunities</h2>
 <?php
-ini_set('memory_limit', '-1');
 // 3.
 if (isset($_REQUEST['internID']))
     $InternID = $_REQUEST['internID'];
