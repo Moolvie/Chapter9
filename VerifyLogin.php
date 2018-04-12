@@ -21,38 +21,36 @@
 $errors = 0;
 $DBConnect = @mysqli_connect("localhost", "root", "crumplebatverifytree");
 if ($DBConnect === FALSE) {
-    echo "<p>Unable to connect to the database
-    server. " .
-    "Error code " . mysqli_errno() . ": " .
-    mysqli_error() . "</p>\n";
+    echo "<p>Unable to connect to the database server. " .
+         "Error code " . mysqli_errno() . ": " .
+         mysqli_error() . "</p>\n";
     ++$errors;
     }
     else {
-    $DBName = "internships";
-    $result = @mysqli_select_db($DBName,
-    $DBConnect);
+         $DBName = "internships";
+         $result = @mysqli_select_db($DBName, $DBConnect);
     if ($result === FALSE) {
         echo "<p>Unable to select the database. " .
             "Error code " . mysqli_errno($DBConnect) .
             ": " . mysqli_error($DBConnect) .
             "</p>\n";
-        ++$errors;
+    ++$errors;
     }
 }
 $TableName = "interns";
+$userEmail = stripslashes($_POST['email']);
+$userPasswd = md5(stripslashes($_POST['password']));
 if ($errors == 0) {
-    $SQLstring = "SELECT internID, first, last FROM $TableName" 
-        . " WHERE email='" . stripslashes($_POST['email']) .
-        "' AND password_md5='" .
-        md5(stripslashes($_POST['password'])) . "'";
+    $SQLstring = "SELECT internID, first, last FROM $TableName 
+	 WHERE email='$userEmail' AND password_md5='$userPasswd'";
 	echo "<p>Query = $SQLstring</p>\n";
     $QueryResult = @mysqli_query($DBConnect, $SQLstring);
-	echo "<p>Query result = $QueryResulti</p>\n";
+	echo "<p>Query result = $QueryResult</p>\n";
     if (mysqli_num_rows($QueryResult)==0) {
         echo "<p>The e-mail address/password " .
             " combination entered is not valid.
             </p>\n";
-        ++$errors;
+    ++$errors;
     }
     else {
         $Row = mysqli_fetch_assoc($QueryResult);
