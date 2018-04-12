@@ -48,8 +48,8 @@ $userEmail = stripslashes($_POST['email']);
 $userPass = md5(stripslashes($_POST['password']));
 if ($errors == 0) {
     $SQLstring = "SELECT internID, first, last FROM $TableName WHERE email='$userEmail' AND password_md5='$userPass'";
-        	
-    $QueryResult = mysqli_query($SQLstring, $DBConnect);
+        	echo "<p>$SQLstring</p>";
+    $QueryResult = mysqli_query($DBConnect, $SQLstring);
 	
     if (mysqli_num_rows($QueryResult)==0) {
         echo "<p>The e-mail address/password " .
