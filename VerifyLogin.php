@@ -29,14 +29,14 @@ if ($DBConnect === FALSE) {
     else {
          $DBName = "internships";
          $result = @mysqli_select_db($DBName, $DBConnect);
-    if ($result === FALSE) {
-        echo "<p>Unable to select the database. " .
-            "Error code " . mysqli_errno($DBConnect) .
-            ": " . mysqli_error($DBConnect) .
-            "</p>\n";
-    ++$errors;
-    }
-}
+		if ($result === FALSE) {
+			echo "<p>Unable to select the database. " .
+				"Error code " . mysqli_errno($DBConnect) .
+				": " . mysqli_error($DBConnect) .
+				"</p>\n";
+		++$errors;
+		}
+	}
 $TableName = "interns";
 $userEmail = stripslashes($_POST['email']);
 $userPasswd = md5(stripslashes($_POST['password']));
