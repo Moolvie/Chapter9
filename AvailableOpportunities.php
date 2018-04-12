@@ -26,23 +26,20 @@ else
     $InternID = −1;
 // 4.
 $errors = 0;
-$DBConnect = @mysql_connect("lcoalhost", "root", "!root");
+$DBConnect = @mysqli_connect("lcoalhost", "root", "crumplebatverifytree");
 if ($DBConnect === FALSE) {
-    echo "<p>Unable to connect to the database
-        server. " .
-        "Error code " . mysql_errno() . ": " .
-        mysql_error() . "</p>\n";
+    echo "<p>Unable to connect to the database server. " .
+        "Error code " . mysqli_errno() . ": " .
+        mysqli_error() . "</p>\n";
     ++$errors;
 }
 else {
     $DBName = "internships";
-    $result = @mysql_select_db($DBName,
-    $DBConnect);
+    $result = @mysqli_select_db($DBConnect, $DBName);
     if ($result === FALSE) {
         echo "<p>Unable to select the database. " .
-        "Error code " . mysql_
-        errno($DBConnect) . ": " .
-        mysql_error($DBConnect) . "</p>\n";
+        "Error code " . mysqli_errno($DBConnect) . ": " .
+        mysqli_error($DBConnect) . "</p>\n";
     ++$errors;
     }
 }
@@ -51,16 +48,15 @@ $TableName = "interns";
 if ($errors == 0) {
     $SQLstring = "SELECT * FROM $TableName WHERE " .
         " internID='$InternID'";
-    $QueryResult = @mysql_query($SQLstring, $DBConnect);
+    $QueryResult = @mysqli_query($DBConnect, $SQLstring);
     if ($QueryResult === FALSE) {
         echo "<p>Unable to execute the query. " .
-            "Error code " . mysql_
-            errno($DBConnect) . ": " .
-            mysql_error($DBConnect) . "</p>\n";
+            "Error code " . mysqli_errno($DBConnect) . ": " .
+            mysqli_error($DBConnect) . "</p>\n";
         ++$errors;
     }
     else {
-        if (mysql_num_rows($QueryResult) == 0) {
+        if (mysqli_num_rows($QueryResult) == 0) {
             echo "<p>Invalid Intern ID!</p>";
             ++$errors;
         }
@@ -68,7 +64,7 @@ if ($errors == 0) {
 }
 // 6.
 if ($errors == 0) {
-    $Row = mysql_fetch_assoc($QueryResult);
+    $Row = mysqli_fetch_assoc($QueryResult);
     $InternName = $Row['first'] . " " . $Row['last'];
 } else
     $InternName = "";
@@ -79,31 +75,31 @@ $SQLstring = "SELECT COUNT(opportunityID) FROM
 $TableName " .
     " WHERE internID='$InternID' " .
     " AND date_approved IS NOT NULL";
-$QueryResult = @mysql_query($SQLstring, $DBConnect);
-if (mysql_num_rows($QueryResult) > 0) {
-    $Row = mysql_fetch_row($QueryResult);
+$QueryResult = @mysqli_query($DBConnect, $SQLstring);
+if (mysqli_num_rows($QueryResult) > 0) {
+    $Row = mysqli_fetch_row($QueryResult);
     $ApprovedOpportunities = $Row[0];
-    mysql_free_result($QueryResult);
+    mysqli_free_result($QueryResult);
 }
 // 8.
 $SelectedOpportunities = array();
 $SQLstring = "SELECT opportunityID FROM $TableName " .
     " WHERE internID='$InternID'";
-$QueryResult = @mysql_query($SQLstring, $DBConnect);
-if (mysql_num_rows($QueryResult) > 0) {
-    while (($Row = mysql_fetch_row($QueryResult)) !== FALSE)
+$QueryResult = @mysqli_query($DBConnect, $SQLstring);
+if (mysqli_num_rows($QueryResult) > 0) {
+    while (($Row = mysqli_fetch_row($QueryResult)) !== FALSE)
         $SelectedOpportunities[] = $Row[0];
-    mysql_free_result($QueryResult);
+    mysqli_free_result($QueryResult);
 }
 // 9.
 $AssignedOpportunities = array();
 $SQLstring = "SELECT opportunityID FROM $TableName " .
         " WHERE date_approved IS NOT NULL";
-$QueryResult = @mysql_query($SQLstring, $DBConnect);
-if (mysql_num_rows($QueryResult) > 0) {
-    while (($Row = mysql_fetch_row($QueryResult)) !== FALSE)
+$QueryResult = @mysqli_query($DBConnect, $SQLstring);
+if (mysqli_num_rows($QueryResult) > 0) {
+    while (($Row = mysqli_fetch_row($QueryResult)) !== FALSE)
         $AssignedOpportunities[] = $Row[0];
-    mysql_free_result($QueryResult);
+    mysqli_free_result($QueryResult);
 }
 // 10.
 $TableName = "opportunities";
@@ -112,13 +108,13 @@ $SQLstring = "SELECT opportunityID, company, city, " .
     " start_date, end_date, position,
     description " .
     " FROM $TableName";
-$QueryResult = @mysql_query($SQLstring, $DBConnect);
-if (mysql_num_rows($QueryResult) > 0) {
-    while (($Row = mysql_fetch_assoc($QueryResult)) !== FALSE)
+$QueryResult = @mysqli_query($DBConnect, $SQLstring);
+if (mysqli_num_rows($QueryResult) > 0) {
+    while (($Row = mysqli_fetch_assoc($QueryResult)) !== FALSE)
         $Opportunities[] = $Row;
-        mysql_free_result($QueryResult);
+        mysqli_free_result($QueryResult);
 }
-mysql_close($DBConnect);
+mysqli_close($DBConnect);
 // 11.
 echo "<table border='1' width='100%'>\n";
 echo "<tr>\n";
