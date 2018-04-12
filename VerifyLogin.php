@@ -24,38 +24,34 @@
 $errors = 0;
 $DBConnect = @mysqli_connect("localhost", "root", "!root");
 if ($DBConnect === FALSE) {
-    echo "<p>Unable to connect to the database
-    server. " .
-    "Error code " . mysqli_errno($DBConnect) . ": " .
-    mysqli_error($DBConnect) . "</p>\n";
+    echo "<p>Unable to connect to the database server. " .
+         "Error code " . mysqli_errno() . ": " .
+         mysqli_error() . "</p>\n";
     ++$errors;
     }
     else {
-    $DBName = "internships";
-    $result = @mysqli_select_db($DBName,
-    $DBConnect);
-    if ($result === FALSE) {
-        echo "<p>Unable to select the database. " .
-            "Error code " . mysqli_errno($DBConnect) .
-            ": " . mysqli_error($DBConnect) .
-            "</p>\n";
-        ++$errors;
-    }
-}
-// #4
+         $DBName = "internships";
+         $result = @mysqli_select_db($DBConnect, $DBName);
+		if ($result === FALSE) {
+			echo "<p>Unable to select the database. " .
+				"Error code " . mysqli_errno($DBConnect) .
+				": " . mysqli_error($DBConnect) .
+				"</p>\n";
+		++$errors;
+		}
+	}
 $TableName = "interns";
 $userEmail = stripslashes($_POST['email']);
-$userPass = md5(stripslashes($_POST['password']));
+$userPasswd = md5(stripslashes($_POST['password']));
 if ($errors == 0) {
-    $SQLstring = "SELECT internID, first, last FROM $TableName WHERE email='$userEmail' AND password_md5='$userPass'";
-        	echo "<p>$SQLstring</p>";
-    $QueryResult = mysqli_query($DBConnect, $SQLstring);
-	
+    $SQLstring = "SELECT internID, first, last FROM $TableName 
+	 WHERE email='$userEmail' AND password_md5='$userPasswd'";
+    $QueryResult = @mysqli_query($DBConnect, $SQLstring);
     if (mysqli_num_rows($QueryResult)==0) {
         echo "<p>The e-mail address/password " .
             " combination entered is not valid.
             </p>\n";
-        ++$errors;
+    ++$errors;
     }
     else {
         $Row = mysqli_fetch_assoc($QueryResult);
