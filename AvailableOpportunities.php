@@ -110,8 +110,9 @@ $SQLstring = "SELECT opportunityID, company, city, " .
     " FROM $TableName";
 $QueryResult = @mysqli_query($DBConnect, $SQLstring);
 if (mysqli_num_rows($QueryResult) > 0) {
-    while (($Row = mysqli_fetch_assoc($QueryResult)) !== FALSE)
+    while ($Row = mysqli_fetch_assoc($QueryResult)){ 
         $Opportunities[] = $Row;
+    }
         mysqli_free_result($QueryResult);
 }
 mysqli_close($DBConnect);
