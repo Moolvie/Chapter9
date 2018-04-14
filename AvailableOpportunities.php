@@ -26,7 +26,7 @@ else
     $InternID = −1;
 // 4.
 $errors = 0;
-$DBConnect = @mysqli_connect("localhost", "root", "");
+$DBConnect = @mysqli_connect("localhost", "root", "!root");
 if ($DBConnect === FALSE) {
     echo "<p>Unable to connect to the database server. " .
         "Error code " . mysqli_errno() . ": " .
