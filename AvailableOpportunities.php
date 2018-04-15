@@ -108,9 +108,10 @@ $SQLstring = "SELECT * FROM $TableName";
 $QueryResult = $DBConnect->query("SELECT * FROM opportunities");
 
 if (mysqli_num_rows($QueryResult) > 0) {
-    while (($Row = mysqli_fetch_assoc($QueryResult)) !== FALSE)
+    while ($Row = mysqli_fetch_assoc($QueryResult)){ 
         $Opportunities[] = $Row;
-    mysqli_free_result($QueryResult);
+    }
+        mysqli_free_result($QueryResult);
 }
 mysqli_close($DBConnect);
 // 11.
