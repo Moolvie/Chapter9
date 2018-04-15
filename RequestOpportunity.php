@@ -46,14 +46,14 @@ if ($errors == 0){
 }
 // #6
 $DisplayDate = date("l, F j, Y, g:i A");
-$DatabaseDate = date{"Y-m-d H:i:s"};
+$DatabaseDate = date("Y-m-d H:i:s");
 if ($errors == 0){
-    $TableName ="assigned_opportunites";
+    $TableName ="assigned_opportunities";
     $SQLstring = "INSERT INTO $TableName " .
             " (opportunityID, internID, " . 
             " date_selected) VALUES " . 
             " ($OpportunityID, $InternID, " . 
-            " '$DatabseDate')";
+            " '$DatabaseDate')";
     $QueryResult = @mysqli_query($DBConnect, $SQLstring);
     if ($QueryResult === FALSE){
         $Body .= "<p>Unable to execute the query. " . 
@@ -71,7 +71,7 @@ if ($errors == 0){
 // #7
 if ($InternID > 0)
     $Body .= "<p>Return to the <a href='" . 
-            "AvailableOpportunities.php?interID=$InternID'>" . 
+            "AvailableOpportunities.php?internID=$InternID'>" . 
             "Available Opportunities</a> page.</p>\n";
 else
     $Body .= "<p>Please <a href='InternLogin.php'>Register " . 
@@ -99,7 +99,7 @@ if ($errors == 0)
 </head>
 <body>
 <!-- #2 -->
-<h1>Colleg Internship</h1>
+<h1>College Internship</h1>
 <h2>Opportunity Requested</h2>
 <!-- #3 -->
 <?php

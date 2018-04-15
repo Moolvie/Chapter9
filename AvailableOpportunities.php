@@ -24,6 +24,11 @@ if (isset($_REQUEST['internID']))
     $InternID = $_REQUEST['internID'];
 else
     $InternID = −1;
+// $1b.
+if (isset($_COOKIE['LastRequestDate']))
+    $LastRequestDate = $_COOKIE['LastRequestDate'];
+else
+    $LastRequestDate = '';
 // 4.
 $errors = 0;
 $DBConnect = @mysqli_connect("localhost", "root", "!root");
@@ -116,6 +121,9 @@ if (mysqli_num_rows($QueryResult) > 0) {
         mysqli_free_result($QueryResult);
 }
 mysqli_close($DBConnect);
+if (!empty($LastRequestDate))
+    echo "<p>You last requested an internship opportunity" .
+        " on $LastRequestDate.</p>\n";
 // 11.
 echo "<table border='1' width='100%'>\n";
 echo "<tr>\n";
