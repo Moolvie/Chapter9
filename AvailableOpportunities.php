@@ -26,7 +26,7 @@ else
     $InternID = −1;
 // 4.
 $errors = 0;
-$DBConnect = @mysqli_connect("localhost", "root", "crumplebatverifytree");
+$DBConnect = @mysqli_connect("localhost", "root", "!root");
 if ($DBConnect === FALSE) {
     echo "<p>Unable to connect to the database server. " .
         "Error code " . mysqli_errno() . ": " .
@@ -104,15 +104,13 @@ if (mysqli_num_rows($QueryResult) > 0) {
 // 10.
 $TableName = "opportunities";
 $Opportunities = array();
-$SQLstring = "SELECT opportunityID, company, city, " .
-    " start_date, end_date, position,
-    description " .
-    " FROM $TableName";
-$QueryResult = @mysqli_query($DBConnect, $SQLstring);
+$SQLstring = "SELECT * FROM $TableName";
+$QueryResult = $DBConnect->query("SELECT * FROM opportunities");
+
 if (mysqli_num_rows($QueryResult) > 0) {
     while (($Row = mysqli_fetch_assoc($QueryResult)) !== FALSE)
         $Opportunities[] = $Row;
-        mysqli_free_result($QueryResult);
+    mysqli_free_result($QueryResult);
 }
 mysqli_close($DBConnect);
 // 11.
