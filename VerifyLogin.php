@@ -65,13 +65,9 @@ if ($errors > 0) {
         indicated.</p>\n";
 }
 if ($errors == 0) {
-    echo "<form method='post' " .
-        " action='AvailableOpportunities.php'>\n";
-    echo "<input type='hidden' name='internID' " .
-        " value='$InternID'>\n";
-    echo "<input type='submit' name='submit' " .
-        " value='View Available Opportunities'>\n";
-    echo "</form>\n";
+	echo "<p><a href='AvailableOpportunities.php?" .
+		"internID=$InternID'>Available " .
+		" Opportunities</a></p>\n";
 }
 ?>
 </body>
