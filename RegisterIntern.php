@@ -116,7 +116,7 @@ if ($errors == 0) {
 		" VALUES ( '$first', '$last', '$email', " .
 		" '" . md5($password) . "')";
 	$QueryResult = @mysqli_query($DBConnect, $SQLstring);
-	if ($QueryResult !== FALSE) {
+	if ($QueryResult === FALSE) {
 		echo "<p>Unable to save your registration " .
 			" information. Error code " .
 			mysqli_errno($DBConnect) . ": " .
